@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Bot extends TelegramLongPollingBot {
-    static String[] kirill = {"Ў", "ў", "Ғ", "ғ", "Ё", "Ц", "Ч", "Ш", "Я", "Ғ", "ғ", "Ў", "ў", "Я", "я", "Ю", "ю", "Ш", "ш", "Ч", "ч", "Ц", "ц", "Ё", "ё", "А", "а", "Б", "б", "В", "в", "Г", "г",
+    static String[] kirill = {"/", "Ў", "ў", "Ғ", "ғ", "Ё", "Ц", "Ч", "Ш", "Я", "Ғ", "ғ", "Ў", "ў", "Я", "я", "Ю", "ю", "Ш", "ш", "Ч", "ч", "Ц", "ц", "Ё", "ё", "А", "а", "Б", "б", "В", "в", "Г", "г",
             "Д", "д", "Е", "е", "Ж", "ж", "З", "з",
             "И", "и", "Й", "й", "К", "к", "Л", "л", "М", "м",
             "Н", "н", "О", "о", "П", "п", "Р", "р", "С", "с",
@@ -14,7 +14,7 @@ public class Bot extends TelegramLongPollingBot {
             "Э", "э",
             "Қ", "қ", "Ҳ", "ҳ", ".", ",", " ", "?", "!"};
 
-    static String[] latin = {"O‘", "o‘", "G‘", "g‘", "Yo", "Ts", "Ch", "Sh", "Ya", "G'", "g'", "O'", "o'", "YA", "ya", "Yu", "yu", "SH", "sh", "CH", "ch", "TS", "ts", "YO", "yo", "А", "a", "B", "b", "V", "v", "G", "g",
+    static String[] latin = {"/", "O‘", "o‘", "G‘", "g‘", "Yo", "Ts", "Ch", "Sh", "Ya", "G'", "g'", "O'", "o'", "YA", "ya", "Yu", "yu", "SH", "sh", "CH", "ch", "TS", "ts", "YO", "yo", "А", "a", "B", "b", "V", "v", "G", "g",
             "D", "d", "E", "e", "J", "j", "Z", "z",
             "I", "i", "Y", "y", "K", "k", "L", "l", "M", "m",
             "N", "n", "O", "o", "P", "p", "R", "r", "S", "s",
@@ -35,13 +35,18 @@ public class Bot extends TelegramLongPollingBot {
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chId);
-//        sendMessage.setText(toLatin(text));
 
-        if (check(text).equals("kirill")){
-            sendMessage.setText(toLatin(text));
+        if (text.equals("/start")){
+            sendMessage.setText("Latin kiril convertori botiga xush kelibsiz\n Lotincha yoki kirillcha so'z kiriting");
         }else {
-            sendMessage.setText(toKirill(text));
+            if (check(text).equals("kirill")){
+                sendMessage.setText(toLatin(text));
+            }else {
+                sendMessage.setText(toKirill(text));
+            }
         }
+
+
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -57,13 +62,11 @@ public class Bot extends TelegramLongPollingBot {
             for (String s : kirill) {
                 if (s.equals(String.valueOf(str.charAt(i)))){
                     k++;
-//                    return false;
                 }
             }
             for (String s : latin) {
                 if (s.equals(String.valueOf(str.charAt(i)))){
                     l++;
-//                    return false;
                 }
             }
         }
